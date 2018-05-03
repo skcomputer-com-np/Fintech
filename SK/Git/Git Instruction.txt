@@ -1,1 +1,40 @@
+
+LINK: http://dont-be-afraid-to-commit.readthedocs.io/en/latest/git/commandlinegit.html
+
+#-------------- Using Git Bash [ WINDOWS ] -------------#
+
 #Take Clone
+git clone https://github.com/SK5277-SINGH/Fintech.git
+
+#Delete directory in windows
+rm -rf <directory_name>
+
+#Make branch
+git checkout -b amend-my-name #Switched to a new branch 'amend-my-name'
+	or
+git checkout -b new-branch existing-branch
+
+#Show all Remote and local branch
+git branch -v
+git remote show origin
+
+#Add files
+git add .
+git add <file_name>
+
+# 
+#Commit
+git commit -m "massege" #git commit -m "[ADD] add new file"
+
+#Push
+git push origin <branch_name> #git push origin master
+
+#
+#------------- Some git IMP command --------------#
+git stash
+git status
+git diff
+git log
+git fetch
+git pull
+git remote
