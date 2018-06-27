@@ -4,18 +4,16 @@
 Name "TheBeastDesktop"
 InstallDir $LOCALAPPDATA\TheBeast\TheBeastAppsDesktop\ws
 OutFile "TheBeastDeskttopInstall.exe"
-AllowRootDirInstall true
+;AllowRootDirInstall true
 ShowInstDetails show
 
-;!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\beast.ico"
-;!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\beast.ico"
 Caption "The Beast Desktop"
-BrandingText "The Beast App"
+BrandingText "TheBeastApp"
 RequestExecutionLevel admin
 
 !define MUI_UI "${NSISDIR}\Contrib\UIs\modern.exe"
 !define MUI_HEADERIMAGE
-;!define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\newBeast.bmp"
+!define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\beast-header.bmp"
 !define MUI_HEADERIMAGE_RIGHT
 ;!define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\beast-header.bmp"
 !define MUI_BGCOLOR "c4c5c4 "
@@ -39,12 +37,12 @@ RequestExecutionLevel admin
 !insertmacro MUI_LANGUAGE "English"
 
 ;Splace screen
-;Function .onInit
-;  InitPluginsDir
-;  File "/oname=$PluginsDir\spltmp.bmp" "${NSISDIR}\Contrib\Graphics\Header\newBeast.bmp"
-;  advsplash::show 2000 600 400 -1 $PluginsDir\spltmp
-;  Pop $0
-;FunctionEnd
+Function .onInit
+  InitPluginsDir
+  File "/oname=$PluginsDir\spltmp.bmp" "${NSISDIR}\Contrib\Graphics\Header\beast-header.bmp"
+  advsplash::show 2000 600 400 -1 $PluginsDir\spltmp
+  Pop $0
+FunctionEnd
 Function CopyFiles
         File F:\BeastCopy\TheBeastAppsDesktop.exe
         File F:\BeastCopy\*.reg
@@ -55,7 +53,7 @@ Function checkFile
          IfFileExists $INSTDIR\TheBeastAppsDesktop.exe deleteOld copyNew
           deleteOld:
           Delete "$INSTDIR\TheBeastAppsDesktop.exe"
-          DeleteRegKey HKCU "SOFTWARE\TheBEAST"
+          DeleteRegKey HKCU "SOFTWARE\TheBEAST\TheBeastAppsDesktop\"
           Call CopyFiles
           Goto next
           
@@ -64,7 +62,6 @@ Function checkFile
           Goto next
         next:
 FunctionEnd
-
 Section "BeastDesktop" BeastApp
         SectionIn RO
         SetOutPath $INSTDIR
@@ -100,10 +97,11 @@ Section "Uninstall"
         DetailPrint "Uninstalling beast files and configurations"
         SetDetailsPrint none
         DeleteRegKey HKCU Software\TheBeastDesktop
-        DeleteRegKey HKCU "SOFTWARE\TheBEAST"
+        DeleteRegKey HKCU "SOFTWARE\TheBEAST\TheBeastAppsDesktop\"
         Delete "$INSTDIR\UninstallTheBeastDesktop.exe"
         Delete "$INSTDIR\TheBeastAppsDesktop.exe"
         Delete "$INSTDIR\cl32.dll"
         Delete "$INSTDIR\Desktopreg.reg"
         Delete "$DESKTOP\TheBeastDesktop.lnk"
+        
 SectionEnd
