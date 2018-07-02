@@ -2,7 +2,7 @@
 
 #TokenID with LoginUserID
 select t1.TokenID, t2.LoginUserID, t1.ActionDetail from WebInfo as t1 left join 
-(select LoginUserId, TokenID from WebInfo where LoginUserId != "" AND TokenID != "") as t2 on t1.TokenId = t2.TokenID 
+(select distinct LoginUserId, TokenID from WebInfo where LoginUserId != "" AND TokenID != "") as t2 on t1.TokenId = t2.TokenID 
 where t1.TokenID != "" group by t1.TokenID;
 
 
@@ -12,4 +12,16 @@ from  WebInfo  b
 join (select id from(select   a.LoginUserId,a.TokenID as id,a.LogTime from WebInfo a 
 where a.LoginUserId!="" && a.TokenID!=""&& a.LoginUserId="100testuser@fintechglobal.center" order by a.LoginUserId,a.LogTime desc limit 1 ) as s) as s2 
 on b.TokenID=s2.id order by b.LogTime desc;
+
+
+#login and logout in Grafana
+select 
+t1.LogTime,
+t2.LoginUserID,
+t1.TokenID,
+COUNT(t1.TokenID) as Activities,
+if(COUNT(IF((OperationCode='10'),1,Null)) ,'Logout','Login') as Status
+from WebInfo as t1 left join (select distinct LoginUserId, TokenID from WebInfo where LoginUserId != "" AND TokenID != "") as t2 on t1.TokenId = t2.TokenID 
+where t1.LoginUserID in($loginuserid) AND TIMESTAMP(LogTime) >= $__timeFrom() AND  TIMESTAMP(LogTime) <= $__timeTo()  AND   t1.TokenID != "" group by t1.TokenID order by LogTime desc;
+
 
