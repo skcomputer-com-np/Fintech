@@ -38,3 +38,6 @@ git log
 git fetch
 git pull
 git remote
+
+#Reset to previous commit(Use commit key like '0a462e4')
+git reset --hard "key" #key=0a462e4
