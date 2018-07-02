@@ -1,0 +1,15 @@
+
+
+#TokenID with LoginUserID
+select t1.TokenID, t2.LoginUserID, t1.ActionDetail from WebInfo as t1 left join 
+(select LoginUserId, TokenID from WebInfo where LoginUserId != "" AND TokenID != "") as t2 on t1.TokenId = t2.TokenID 
+where t1.TokenID != "" group by t1.TokenID;
+
+
+#SingleUser Activities
+select b.LogTime,b.LoginUserId,b.ActionDetail 
+from  WebInfo  b 
+join (select id from(select   a.LoginUserId,a.TokenID as id,a.LogTime from WebInfo a 
+where a.LoginUserId!="" && a.TokenID!=""&& a.LoginUserId="100testuser@fintechglobal.center" order by a.LoginUserId,a.LogTime desc limit 1 ) as s) as s2 
+on b.TokenID=s2.id order by b.LogTime desc;
+
