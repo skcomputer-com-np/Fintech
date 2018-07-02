@@ -60,6 +60,6 @@ def getLocation():
 while True:
     try:
         getLocation()
-    except TypeError:
+    except:
         getLocation()
         
