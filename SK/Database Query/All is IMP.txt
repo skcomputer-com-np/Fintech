@@ -25,3 +25,8 @@ from WebInfo as t1 left join (select distinct LoginUserId, TokenID from WebInfo 
 where t1.LoginUserID in($loginuserid) AND TIMESTAMP(LogTime) >= $__timeFrom() AND  TIMESTAMP(LogTime) <= $__timeTo()  AND   t1.TokenID != "" group by t1.TokenID order by LogTime desc;
 
 
+#Session {WebInfo table}
+select t1.LogTime,t2.loginuserid,count(distinct t1.TokenID) as Session
+from WebInfo t1 left join (select distinct tokenid,loginuserid from WebInfo where loginuserid !='' and tokenid !='') as t2 
+on t1.TokenID = t2.TokenID 
+where t2.loginuserid in($loginuserid) and t1.loginuserid !='' and t1.tokenid !='' and TIMESTAMP(LogTime) >= $__timeFrom() AND  TIMESTAMP(LogTime) <= $__timeTo()  group by loginuserid order by logtime desc;
