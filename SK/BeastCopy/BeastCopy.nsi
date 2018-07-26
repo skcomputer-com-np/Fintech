@@ -9,7 +9,7 @@ ShowInstDetails show
 
 Caption "The Beast Desktop"
 BrandingText "TheBeastApp"
-RequestExecutionLevel admin
+RequestExecutionLevel highest
 
 !define MUI_UI "${NSISDIR}\Contrib\UIs\modern.exe"
 !define MUI_HEADERIMAGE
@@ -23,7 +23,7 @@ RequestExecutionLevel admin
 
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
+;!insertmacro MUI_PAGE_LICENSE "${NSISDIR}\Docs\Modern UI\License.txt"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
@@ -92,16 +92,16 @@ Section "BeastDesktop" BeastApp
         DetailPrint "Writing uninstallation details"
         SetDetailsPrint none
         
-        WriteRegStr HKLM Software\TheBeastDesktop "Install_Dir" "$INSTDIR"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayName" "TheBeastDesktop"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayIcon" "${NSISDIR}\Contrib\Graphics\Icons\beast.ico"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "Publisher" "FintechGlobalCenter"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "HelpLink" "https://www.fintechglobal.center"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayVersion" "18.01.01.01"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "NoModify" "1"
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "NoRepair" "1"
+        WriteRegStr HKCU Software\TheBeastDesktop "Install_Dir" "$INSTDIR"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayName" "TheBeastDesktop"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayIcon" "${NSISDIR}\Contrib\Graphics\Icons\beast.ico"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "Publisher" "Fintech Global Center"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "HelpLink" "https://www.fintechglobal.center"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "DisplayVersion" "18.01.01.01"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "NoModify" "1"
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "NoRepair" "1"
 
-        WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "UninstallString" '"$INSTDIR\UninstallTheBeastDesktop.exe"'
+        WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop" "UninstallString" '"$INSTDIR\UninstallTheBeastDesktop.exe"'
         WriteUninstaller "UninstallTheBeastDesktop.exe"
         
         CreateShortcut "$DESKTOP\TheBeastDesktop.lnk" "$INSTDIR\TheBeastAppsDesktop.exe"
@@ -112,8 +112,8 @@ Section "Uninstall"
         SetDetailsPrint both
         DetailPrint "Uninstalling beast files and configurations"
         SetDetailsPrint none
-        DeleteRegKey HKLM Software\TheBeastDesktop
-        DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop"
+        DeleteRegKey HKCU Software\TheBeastDesktop
+        DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\TheBeastDesktop"
         ;DeleteRegKey HKCU "SOFTWARE\TheBEAST\TheBeastAppsDesktop\"
         Delete "$INSTDIR\UninstallTheBeastDesktop.exe"
         Delete "$INSTDIR\TheBeastAppsDesktop.exe"
