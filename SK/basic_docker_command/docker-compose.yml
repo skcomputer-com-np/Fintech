@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  ndfasia:
+    build: ./iis-docker
+    ports:
+      - 8080:8080
+
+    # environment: 
+    #   - COMPOSE_CONVERT_WINDOWS_PATHS=1
+    # env_file:
+    #   - .env
+    # volumes: 
+    #   - C:\Users\admin\Desktop\iis-demo\content:c:\inetpub\wwwroot
+
+

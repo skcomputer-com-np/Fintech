@@ -1,0 +1,13 @@
+#please run in Powershell ISE 
+
+$PoolName   = "Pool"
+$SiteName   = "SSite"
+$PortNumber = 8880
+$DirName    = "Sites"
+$PhyPath    = $env:systemdrive+"\inetpub\"+$DirName
+
+Import-Module WebAdministration
+New-Item –Path IIS:\AppPools\$PoolName
+New-Item -Path $PhyPath -Type Directory -Name $null -Force
+Copy-Item "$env:systemdrive\inetpub\wwwroot\*" $PhyPath
+New-WebSite -Name $SiteName -Port $PortNumber -PhysicalPath $PhyPath -ApplicationPool $PoolName -Force
